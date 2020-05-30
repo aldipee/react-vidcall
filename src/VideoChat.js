@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react'
+import Lobby from './Lobby'
 
 const VideoChat = () => {
   const [username, setUsername] = useState('')
@@ -33,7 +34,27 @@ const VideoChat = () => {
   const handleLogout = useCallback(event => {
     setToken(null)
   }, [])
-  return <div></div> // we'll build up our response later
+  let render
+  if (token) {
+    render = (
+      <div>
+        <p>Username: {username}</p>
+        <p>Room name: {roomname}</p>
+        <p>Token: {token}</p>
+      </div>
+    )
+  } else {
+    render = (
+      <Lobby
+        username={username}
+        roomName={roomname}
+        handleUsernameChange={handleUsernameChange}
+        handleRoomNameChange={handleRoomnameChange}
+        handleSubmit={handleSubmit}
+      />
+    )
+  }
+  return render
 }
 
 export default VideoChat
